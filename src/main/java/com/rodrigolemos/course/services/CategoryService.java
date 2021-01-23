@@ -41,5 +41,19 @@ public class CategoryService {
 			throw new DatabaseException(e.getMessage());
 		}
 	}
+	
+	public Category update(Long id, Category obj) {
+		try {
+			Category entity = repository.getOne(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		}
+	}
+	
+	public void updateData(Category entity, Category obj) {
+		entity.setName(obj.getName());
+	}
 
 }
